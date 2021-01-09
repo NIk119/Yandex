@@ -21,12 +21,12 @@ def test_yandex_in(app):
 @allure.story('Логин')
 @allure.severity('critical')
 def test_yandex_login(app):
-    app.Yandex.enter_login('cnbrfn')
+    app.Yandex.enter_login()
     #вводим логин Входим (кнопку нажимаем)
 @allure.story('Пароль')
 @allure.severity('critical')
 def test_yandex_password(app):
-    app.Yandex.enter_password('adkjgsuiafsiauoyrn1q')
+    app.Yandex.enter_password()
     #вводим пароль входим в аккаунт
 @allure.story('пошел по почте')
 @allure.severity('normal')
