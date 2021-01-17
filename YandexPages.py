@@ -3,7 +3,6 @@ import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import ElementClickInterceptedException
-from Locators import YandexSeacrhLocators as YSL
 import allure
 from allure_commons.types import AttachmentType
 
@@ -38,7 +37,7 @@ class SearchHelper():
         #логин вводим
         time.sleep(5)
         with allure.step("WebDriverWait явное ожидание"):
-            search_field = self.app.find_element(YSL.LOGIN_MAIL)
+            search_field = self.app.find_element((By.XPATH, "//input[@id='passp-field-login']"))
         #запуск явного ожидания через BaseApp
         with allure.step("очистили окно ввода логина"):
             search_field.clear()
@@ -49,14 +48,14 @@ class SearchHelper():
 
     def click_login(self):
         #кликнули на кнопку
-        search_field=self.app.find_element(YSL.click_login)
+        search_field=self.app.find_element((By.XPATH, "//button[@type='submit']"))
         with allure.step("Click"):
             search_field.click()
 
     def enter_password(self,password):
         #пароль вводим
         with allure.step("WebDriverWait явное ожидание"):
-            search_field = self.app.find_element(YSL.password_mail)
+            search_field = self.app.find_element((By.XPATH, "//input[@id='passp-field-passwd']"))
         with allure.step("очистили окно ввода пароля"):
             search_field.clear()
         with allure.step("ввели  пароль"):
@@ -65,7 +64,7 @@ class SearchHelper():
 
     def click_password(self):
         # кликнули на кнопку
-        search_field=self.app.find_element(YSL.click_password)
+        search_field=self.app.find_element((By.XPATH, "//button[@type='submit']"))
         with allure.step("Click"):
             search_field.click()
 
@@ -145,19 +144,19 @@ class SearchHelper():
         #self.app.browser.implicitly_wait(10)
         time.sleep(3)
         with allure.step("Click"):
-            self.app.find_element(YSL.post_mail).click()
+            self.app.find_element((By.XPATH, "//span[@class='mail-ComposeButton-Text']")).click()
         with allure.step("Отправляем mail получателя"):
-            self.app.find_element(YSL.post_login1).send_keys(post_login)
+            self.app.find_element((By.XPATH, "//div[@class='ComposeRecipients-TopRow']//div[@class='composeYabbles']")).send_keys(post_login)
         #здесь нужно отметьтить то ,что если сделать здесь задержку в отправке письма, то высветится окошко выбора mail, а оно перекрывает остальные окна
         #значит нужно реализовать код иначе, но так как это было замечено случайно , то лучше реализовать это потом
 
-        search_field=self.app.find_element(YSL.cke_wysiwyg_div)
+        search_field=self.app.find_element((By.XPATH, "//div[@class='composeReact-MBodyPanels']//div[starts-with(@class,'cke_wysiwyg_div ')]"))
         with allure.step("Click"):
             search_field.click()
         with allure.step("В теле письма пишем"):
             search_field.send_keys(f"Количество писем: {self.countmails}")
         with allure.step("Заголовок пишем"):
-            self.app.find_element(YSL.TextField).send_keys(f"Тестовое  задание.  {fam}")
+            self.app.find_element((By.XPATH, "//div[@class='ComposeSubject']//input[starts-with(@class,'composeTextField ComposeSubject-TextField')]")).send_keys(f"Тестовое  задание.  {fam}")
         with allure.step("Click"):
-            self.app.find_element(YSL.ComposeSendButton_desktop).click()
+            self.app.find_element((By.XPATH, "//div[contains(@class,'ComposeSendButton_desktop')]")).click()
         time.sleep(5)

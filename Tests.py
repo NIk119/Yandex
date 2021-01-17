@@ -1,7 +1,7 @@
 
 import allure
+from Dat import YandexSeacrhData as dat
 
-from allure_commons.types import AttachmentType
 
 # @allure.feature('Open pages')
 # @allure.story('Открывает станицу')
@@ -21,12 +21,12 @@ def test_yandex_in(app):
 @allure.story('Логин')
 @allure.severity('critical')
 def test_yandex_login(app):
-    app.Yandex.enter_login('cnbrfn')
+    app.Yandex.enter_login(dat.LOGIN)
     #вводим логин Входим (кнопку нажимаем)
 @allure.story('Пароль')
 @allure.severity('critical')
 def test_yandex_password(app):
-    app.Yandex.enter_password('QIh90UyTNofgjy1C7HFT')
+    app.Yandex.enter_password(dat.PASSWORD)
     #вводим пароль входим в аккаунт
 @allure.story('пошел по почте')
 @allure.severity('normal')
@@ -36,7 +36,7 @@ def test_yandex_mail(app):
 @allure.story('отправка почты')
 @allure.severity('critical')
 def test_yandex_output(app):
-    app.Yandex.mail_post('zyaOwS5dEj@yandex.ru','Зотов')
+    app.Yandex.mail_post(dat.MAIL,dat.LAST_NAME)
     # отправили почту
     
     
