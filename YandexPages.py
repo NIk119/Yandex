@@ -7,20 +7,36 @@ import allure
 from allure_commons.types import AttachmentType
 
 
-# def cli(fn):
-#     def wrapper():
-#         with allure.step("Click"):
-#             print('sdsssss')
-#
-#             fn()
-#         return wrapper
-#     #return cli
+def cli(fn):
+    def wrapper(self):
+        with allure.step("Click"):
+            print('sdsssss')
+
+            fn(self).click()
+
+    return wrapper
+# здесь нет магии ,это КОООДД!!!
+#вообщем тут получается так, cli получает return локатора из click_login .Ну или проще поучает сам click_login
+# потом wrapper получает в себя self,он очень важен, так как дает запустить сам click_login
+# и в самом wrapper мы запускаем fn(self).click() , это очень похоже на click_login(self).click или еще больше расшифровав
+# локатор.click()
+
+#Либо другое объяснение:Он просто получает локатор в fn, но без self ,он не  может использовать этот локатор из click_login
+
+#Либо он оберткой оборачивает wrapper сам становится функцией в классе, и он внутри себя вызывает fn ( click_login) и в нее же передает данные
+#fn(self) и так получется что лишняя функция wrapper в клссе SearchHelper.Он похоже просто вызывает эту функцию
+#добавляя немного от себя , пере или после тем как выполнить вызываемую fn(self)
+#вообщем... я запутался.Прочесть про обертки!!!
+
+
 
 
 class SearchHelper():
     def __init__(self,app):
         self.app=app
         #self.app.browser.implicitly_wait(10)
+
+
 
 
     def enter_mail(self):
@@ -52,15 +68,17 @@ class SearchHelper():
         with allure.step("ввели  логин"):
             search_field.send_keys(login)
 
-
         self.click_login()
+        # ask=self.click_login()
+        # ask.click()
+        # пробуем ,что он в принципе получает локатор через return
 
-    # @cli
+    @cli
     def click_login(self):
         #кликнули на кнопку
-        return  self.app.find_element((By.XPATH, "//button[@type='submit']"))
+        return self.app.find_element((By.XPATH, "//button[@type='submit']"))
 
-        search_field.click()
+       # search_field.click()
 
     def enter_password(self,password):
         #пароль вводим
