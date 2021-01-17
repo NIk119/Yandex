@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-class YandexSeacrhLocators():
+class YandexSeacrhLocators:
 
     LOCATOR_LOGIN_IN_TO_MAIL = (By.XPATH, "//a[contains(@class,'home-link_bold_yes')]")
     LOGIN_MAIL = (By.XPATH, "//input[@id='passp-field-login']")

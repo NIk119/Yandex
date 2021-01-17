@@ -26,7 +26,7 @@ def test_yandex_login(app):
 @allure.story('Пароль')
 @allure.severity('critical')
 def test_yandex_password(app):
-    app.Yandex.enter_password('adkjgsuiafsiauoyrn1q')
+    app.Yandex.enter_password('QIh90UyTNofgjy1C7HFT')
     #вводим пароль входим в аккаунт
 @allure.story('пошел по почте')
 @allure.severity('normal')
@@ -36,7 +36,7 @@ def test_yandex_mail(app):
 @allure.story('отправка почты')
 @allure.severity('critical')
 def test_yandex_output(app):
-    app.Yandex.mail_post('maketalents@simbirsoft.com','Зотов')
+    app.Yandex.mail_post('zyaOwS5dEj@yandex.ru','Зотов')
     # отправили почту
     
     
