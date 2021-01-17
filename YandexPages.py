@@ -7,6 +7,14 @@ import allure
 from allure_commons.types import AttachmentType
 
 
+# def cli(fn):
+#     def wrapper():
+#         with allure.step("Click"):
+#             print('sdsssss')
+#
+#             fn()
+#         return wrapper
+#     #return cli
 
 
 class SearchHelper():
@@ -43,14 +51,16 @@ class SearchHelper():
             search_field.clear()
         with allure.step("ввели  логин"):
             search_field.send_keys(login)
+
+
         self.click_login()
 
-
+    # @cli
     def click_login(self):
         #кликнули на кнопку
-        search_field=self.app.find_element((By.XPATH, "//button[@type='submit']"))
-        with allure.step("Click"):
-            search_field.click()
+        return  self.app.find_element((By.XPATH, "//button[@type='submit']"))
+
+        search_field.click()
 
     def enter_password(self,password):
         #пароль вводим
