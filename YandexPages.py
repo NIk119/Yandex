@@ -15,7 +15,7 @@ def cli(fn):
             fn(self).click()
 
     return wrapper
-# здесь нет магии ,это КОООДД!!!
+
 #вообщем тут получается так, cli получает return локатора из click_login .Ну или проще поучает сам click_login
 # потом wrapper получает в себя self,он очень важен, так как дает запустить сам click_login
 # и в самом wrapper мы запускаем fn(self).click() , это очень похоже на click_login(self).click или еще больше расшифровав
@@ -34,6 +34,7 @@ def cli(fn):
 class SearchHelper():
     def __init__(self,app):
         self.app=app
+        # аннотацию fixture не принимает (или class)
         #self.app.browser.implicitly_wait(10)
 
 
@@ -57,7 +58,7 @@ class SearchHelper():
         with allure.step("переключили на окно 1"):
             self.app.browser.switch_to.window(new_window1)
 
-    def enter_login(self,login):
+    def enter_login(self,login: str):
         #логин вводим
         time.sleep(5)
         with allure.step("WebDriverWait явное ожидание"):
@@ -74,13 +75,13 @@ class SearchHelper():
         # пробуем ,что он в принципе получает локатор через return
 
     @cli
-    def click_login(self):
+    def click_login(self) -> str:
         #кликнули на кнопку
         return self.app.find_element((By.XPATH, "//button[@type='submit']"))
 
        # search_field.click()
 
-    def enter_password(self,password):
+    def enter_password(self,password: str):
         #пароль вводим
         with allure.step("WebDriverWait явное ожидание"):
             search_field = self.app.find_element((By.XPATH, "//input[@id='passp-field-passwd']"))
@@ -104,11 +105,12 @@ class SearchHelper():
 
     def go_mail(self):
         #пошли по почте
-        a=len(self.app.browser.find_elements_by_xpath("//div[@data-key='box=messages-pager-date-box']//div[contains(@class,'b-mail-paginator__group js-year')]"))
+
+        a: int=len(self.app.browser.find_elements_by_xpath("//div[@data-key='box=messages-pager-date-box']//div[contains(@class,'b-mail-paginator__group js-year')]"))
         #переменная нужна для верхней границы почты (год)
-        n=a
+        n: int=a
         #для указание на год
-        aa=0
+        aa: int=0
         #для подсчета почты
         for i in range(a,11,-1):
             #пробегаем по годам
@@ -167,7 +169,7 @@ class SearchHelper():
         self.countmails=aa
         #записали весь результат в переменную(класса)
 
-    def mail_post(self,post_login,fam):
+    def mail_post(self,post_login: str,fam: str):
         #Отправляем почту ,в нее подаем 2 аргумена(почту и фамилию)
         #self.app.browser.implicitly_wait(10)
         time.sleep(3)

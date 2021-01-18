@@ -14,11 +14,11 @@ class BasePage:
         #Переменная для подсчета писем
         self.Yandex=SearchHelper(self)
         self.browser.implicitly_wait(10)
-    def find_element(self, locator,time=10):
+    def find_element(self, locator: str, time: int = 10) -> str:
         return WebDriverWait(self.browser,time).until(EC.visibility_of_element_located(locator),message=f"Can't find element by locator {locator}")
         #чтобы часто не использовать этот метод в YandexPages,я просто буду ссылаться на него
 
-    def go_to_site(self):
+    def go_to_site(self) -> str:
         with allure.step("Зашли"):
             return self.browser.get(self.base_url)
 

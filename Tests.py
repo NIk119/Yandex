@@ -11,6 +11,7 @@ class TestYand:
     @allure.story('Получаем страницу почты')
     @allure.severity('blocker')
     def test_yandex_search(self,app):
+        #аннотацию fixture не принимает (или class)
         #запускаем сайт
         app.go_to_site()
 
