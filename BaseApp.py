@@ -5,9 +5,9 @@ from YandexPages import SearchHelper
 import allure
 class BasePage(SearchHelper):
 
-    def __init__(self):
+    def __init__(self,app):
         #super().__init__()
-        self.browser =  webdriver.Firefox()
+        self.browser =  app
         #self.browser = webdriver.Remote(command_executor="http://192.168.0.101:4444/wd/hub",desired_capabilities={"browserName": "firefox",})
         #в качестве примера испольузется обычный браузер , а ниже сам selenium grid (настроенный)
         self.base_url = "https://yandex.ru/"

@@ -1,7 +1,7 @@
 
 import allure
 from Dat import YandexSeacrhData as dat
-
+from BaseApp import BasePage
 
 # @allure.feature('Open pages')
 # @allure.story('Открывает станицу')
@@ -13,32 +13,32 @@ class TestYand:
     def test_yandex_search(self,app):
         #аннотацию fixture не принимает (или class)
         #запускаем сайт
-        app.go_to_site()
+        BasePage(app).go_to_site()
 
     @allure.story('Заходим')
     @allure.severity('blocker')
     def test_yandex_in(self,app):
-        app.enter_mail()
+        BasePage(app).enter_mail()
         #входим на почту
     @allure.story('Логин')
     @allure.severity('critical')
     def test_yandex_login(self,app):
-        app.enter_login(dat.LOGIN)
+        BasePage(app).enter_login(dat.LOGIN)
         #вводим логин Входим (кнопку нажимаем)
     @allure.story('Пароль')
     @allure.severity('critical')
     def test_yandex_password(self,app):
-        app.enter_password(dat.PASSWORD)
+        BasePage(app).enter_password(dat.PASSWORD)
         #вводим пароль входим в аккаунт
     @allure.story('пошел по почте')
     @allure.severity('normal')
     def test_yandex_mail(self,app):
-        app.go_mail()
+        BasePage(app).go_mail()
         # пошли по почте
     @allure.story('отправка почты')
     @allure.severity('critical')
     def test_yandex_output(self,app):
-        app.mail_post(dat.MAIL,dat.LAST_NAME)
+        BasePage(app).mail_post(dat.MAIL,dat.LAST_NAME)
         # отправили почту
 
     
