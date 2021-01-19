@@ -4,6 +4,6 @@ class YandexSeacrhData:
 
 
     LOGIN: str = 'cnbrfn'
-    PASSWORD: str='QIh90UyTNofgjy1C7HFT'
+    PASSWORD: str='aCTkX4xEyTTc6MdY3AZxcOlTw27ru'
     MAIL: str='zyaOwS5dEj@yandex.ru'
     LAST_NAME: str='Зотов'

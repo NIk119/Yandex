@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import ElementClickInterceptedException
 import allure
 from allure_commons.types import AttachmentType
-
+#from BaseApp import BasePage
 
 def cli(fn):
     def wrapper(self):
@@ -32,8 +32,10 @@ def cli(fn):
 
 
 class SearchHelper():
-    def __init__(self,app):
-        self.app=app
+    # def __init__(self):
+    #     super().__init__()
+        #self.app=app
+
         # аннотацию fixture не принимает (или class)
         #self.app.browser.implicitly_wait(10)
 
@@ -43,26 +45,26 @@ class SearchHelper():
     def enter_mail(self):
         # заходим на почту
         with allure.step("WebDriverWait явное ожидание"):
-            search_field = WebDriverWait(self.app.browser, 5).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@class,'home-link_bold_yes')]")))
+            search_field = WebDriverWait(self.browser, 5).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@class,'home-link_bold_yes')]")))
         # явное ожидание ,локатор кидаем в него из другого файла
         with allure.step("клик"):
             search_field.click()
         with allure.step("создали переменную окно 0"):
-            new_window = self.app.browser.window_handles[0]
+            new_window = self.browser.window_handles[0]
         # создали переменную для действия на  вкладках
         with allure.step("создали переменную окно 1"):
-            new_window1 = self.app.browser.window_handles[1]
+            new_window1 = self.browser.window_handles[1]
         with allure.step("переключили на окно 0"):
-            self.app.browser.switch_to.window(new_window)
+            self.browser.switch_to.window(new_window)
         # переключили действия на первую вкладку
         with allure.step("переключили на окно 1"):
-            self.app.browser.switch_to.window(new_window1)
+            self.browser.switch_to.window(new_window1)
 
     def enter_login(self,login: str):
         #логин вводим
         time.sleep(5)
         with allure.step("WebDriverWait явное ожидание"):
-            search_field = self.app.find_element((By.XPATH, "//input[@id='passp-field-login']"))
+            search_field = self.find_element((By.XPATH, "//input[@id='passp-field-login']"))
         #запуск явного ожидания через BaseApp
         with allure.step("очистили окно ввода логина"):
             search_field.clear()
@@ -77,14 +79,14 @@ class SearchHelper():
     @cli
     def click_login(self) -> str:
         #кликнули на кнопку
-        return self.app.find_element((By.XPATH, "//button[@type='submit']"))
+        return self.find_element((By.XPATH, "//button[@type='submit']"))
 
        # search_field.click()
 
     def enter_password(self,password: str):
         #пароль вводим
         with allure.step("WebDriverWait явное ожидание"):
-            search_field = self.app.find_element((By.XPATH, "//input[@id='passp-field-passwd']"))
+            search_field = self.find_element((By.XPATH, "//input[@id='passp-field-passwd']"))
         with allure.step("очистили окно ввода пароля"):
             search_field.clear()
         with allure.step("ввели  пароль"):
@@ -93,20 +95,20 @@ class SearchHelper():
 
     def click_password(self):
         # кликнули на кнопку
-        search_field=self.app.find_element((By.XPATH, "//button[@type='submit']"))
+        search_field=self.find_element((By.XPATH, "//button[@type='submit']"))
         with allure.step("Click"):
             search_field.click()
 
     def count_mail(self):
         #считает письма на конкретной странице
-        search_field = self.app.browser.find_elements_by_xpath("//div[starts-with(@class,'ns-view-messages-item-wrap ns-view-id-')]")
+        search_field = self.browser.find_elements_by_xpath("//div[starts-with(@class,'ns-view-messages-item-wrap ns-view-id-')]")
         with allure.step("считаем количество писем на странце"):
             return len(search_field)
 
     def go_mail(self):
         #пошли по почте
 
-        a: int=len(self.app.browser.find_elements_by_xpath("//div[@data-key='box=messages-pager-date-box']//div[contains(@class,'b-mail-paginator__group js-year')]"))
+        a: int=len(self.browser.find_elements_by_xpath("//div[@data-key='box=messages-pager-date-box']//div[contains(@class,'b-mail-paginator__group js-year')]"))
         #переменная нужна для верхней границы почты (год)
         n: int=a
         #для указание на год
@@ -115,7 +117,7 @@ class SearchHelper():
         for i in range(a,11,-1):
             #пробегаем по годам
             with allure.step(f"Год {2022-n-1+i}"):
-                c=len(self.app.browser.find_elements_by_xpath(f"//div[@data-key='box=messages-pager-date-box']//div[contains(@class,'b-mail-paginator__group js-year')][{i}]/div[contains(@class,'b-mail-paginator__item')]"))
+                c=len(self.browser.find_elements_by_xpath(f"//div[@data-key='box=messages-pager-date-box']//div[contains(@class,'b-mail-paginator__group js-year')][{i}]/div[contains(@class,'b-mail-paginator__item')]"))
                 #количество месяцев
                 k=0
                 #переменная для нижней границы месяцев
@@ -132,14 +134,14 @@ class SearchHelper():
                                 u=f'0{u}'
                             #search_field=self.app.browser.find_element_by_xpath(f"//div[@data-key='box=messages-pager-date-box']//a[@href='#inbox?datePager={u}.{2022-n-1+i}&']")
                             with allure.step("WebDriverWait явное ожидание"):
-                                search_field=WebDriverWait(self.app.browser, 10).until(EC.presence_of_element_located((By.XPATH, f"//div[@data-key='box=messages-pager-date-box']//a[@href='#inbox?datePager={u}.{2022-n-1+i}&']")))
+                                search_field=WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, f"//div[@data-key='box=messages-pager-date-box']//a[@href='#inbox?datePager={u}.{2022-n-1+i}&']")))
                             with allure.step("переместились к элементу почта , с помощью java_script"):
-                                self.app.browser.execute_script("coordinates = arguments[0].getBoundingClientRect();scrollTo(coordinates.x,coordinates.y);", search_field)
+                                self.browser.execute_script("coordinates = arguments[0].getBoundingClientRect();scrollTo(coordinates.x,coordinates.y);", search_field)
                             with allure.step("Click"):
                                 search_field.click()
                             time.sleep(2)
                             with allure.step("Берем из ссылки на сайте наше местоположение по тесту"):
-                                v=self.app.browser.current_url
+                                v=self.browser.current_url
                             #берем из ссылки на сайте наше местоположение по тесту ,для вывода в консоли
                             with allure.step("прибавили к переменной класса , количество писем"):
                                 aa+=self.count_mail()
@@ -151,19 +153,19 @@ class SearchHelper():
                                 #Мы ее ловим здесь и снова отправляем запрос
                                 #search_field=self.app.browser.find_element_by_xpath(f"//div[@data-key='box=messages-pager-date-box']//a[@href='#inbox?datePager={u}.{2022-n-1+i}&']")
                                 with allure.step("WebDriverWait явное ожидание"):
-                                    search_field=WebDriverWait(self.app.browser, 120).until(EC.presence_of_element_located((By.XPATH, f"//div[@data-key='box=messages-pager-date-box']//a[@href='#inbox?datePager={u}.{2022-n-1+i}&']")))
+                                    search_field=WebDriverWait(self.browser, 120).until(EC.presence_of_element_located((By.XPATH, f"//div[@data-key='box=messages-pager-date-box']//a[@href='#inbox?datePager={u}.{2022-n-1+i}&']")))
                                 with allure.step("переместились к элементу почта , с помощью java_script"):
-                                    self.app.browser.execute_script("coordinates = arguments[0].getBoundingClientRect();scrollTo(coordinates.x,coordinates.y);", search_field)
+                                    self.browser.execute_script("coordinates = arguments[0].getBoundingClientRect();scrollTo(coordinates.x,coordinates.y);", search_field)
                                 with allure.step("Click"):
                                     search_field.click()
                                 time.sleep(2)
                                 with allure.step("Берем из ссылки на сайте наше местоположение по тесту"):
-                                    v=self.app.browser.current_url
+                                    v=self.browser.current_url
                                 with allure.step("прибавили к переменной класса , количество писем"):
                                     aa+=self.count_mail()
                                 print(f'ошибка:ElementClickInterceptedException {v[-8:-1]} писем {aa}  по году{i} по месяцу{u}')
                         with allure.step("Делаем скриншот"):
-                            allure.attach(self.app.browser.get_screenshot_as_png(), name=f"Год {2022-n-1+i},месяц {u}",attachment_type=AttachmentType.PNG)
+                            allure.attach(self.browser.get_screenshot_as_png(), name=f"Год {2022-n-1+i},месяц {u}",attachment_type=AttachmentType.PNG)
                                 #Фиксируем результаты в allure
 
         self.countmails=aa
@@ -174,19 +176,19 @@ class SearchHelper():
         #self.app.browser.implicitly_wait(10)
         time.sleep(3)
         with allure.step("Click"):
-            self.app.find_element((By.XPATH, "//span[@class='mail-ComposeButton-Text']")).click()
+            self.find_element((By.XPATH, "//span[@class='mail-ComposeButton-Text']")).click()
         with allure.step("Отправляем mail получателя"):
-            self.app.find_element((By.XPATH, "//div[@class='ComposeRecipients-TopRow']//div[@class='composeYabbles']")).send_keys(post_login)
+            self.find_element((By.XPATH, "//div[@class='ComposeRecipients-TopRow']//div[@class='composeYabbles']")).send_keys(post_login)
         #здесь нужно отметьтить то ,что если сделать здесь задержку в отправке письма, то высветится окошко выбора mail, а оно перекрывает остальные окна
         #значит нужно реализовать код иначе, но так как это было замечено случайно , то лучше реализовать это потом
 
-        search_field=self.app.find_element((By.XPATH, "//div[@class='composeReact-MBodyPanels']//div[starts-with(@class,'cke_wysiwyg_div ')]"))
+        search_field=self.find_element((By.XPATH, "//div[@class='composeReact-MBodyPanels']//div[starts-with(@class,'cke_wysiwyg_div ')]"))
         with allure.step("Click"):
             search_field.click()
         with allure.step("В теле письма пишем"):
             search_field.send_keys(f"Количество писем: {self.countmails}")
         with allure.step("Заголовок пишем"):
-            self.app.find_element((By.XPATH, "//div[@class='ComposeSubject']//input[starts-with(@class,'composeTextField ComposeSubject-TextField')]")).send_keys(f"Тестовое  задание.  {fam}")
+            self.find_element((By.XPATH, "//div[@class='ComposeSubject']//input[starts-with(@class,'composeTextField ComposeSubject-TextField')]")).send_keys(f"Тестовое  задание.  {fam}")
         with allure.step("Click"):
-            self.app.find_element((By.XPATH, "//div[contains(@class,'ComposeSendButton_desktop')]")).click()
+            self.find_element((By.XPATH, "//div[contains(@class,'ComposeSendButton_desktop')]")).click()
         time.sleep(5)
