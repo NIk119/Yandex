@@ -32,8 +32,18 @@ def cli(fn):
 
 
 class SearchHelper():
-    # def __init__(self):
-    #     super().__init__()
+    def __init__(self):
+        self.LOCATOR_LOGIN_IN_TO_MAIL=(By.XPATH, "//a[contains(@class,'home-link_bold_yes')]")
+        self.LOGIN_MAIL = (By.XPATH, "//input[@id='passp-field-login']")
+        self.CLICK_LOGIN = (By.XPATH, "//button[@type='submit']")
+        self.PASSWORD_MAIL = (By.XPATH, "//input[@id='passp-field-passwd']")
+        self.CLICK_PASSWORD = (By.XPATH, "//button[@type='submit']")
+        self.POST_MAIL = (By.XPATH, "//span[@class='mail-ComposeButton-Text']")
+        self.POST_LOGIN1 = (By.XPATH, "//div[@class='ComposeRecipients-TopRow']//div[@class='composeYabbles']")
+        self.TEXT_FIELD = (By.XPATH,"//div[@class='ComposeSubject']//input[starts-with(@class,'composeTextField ComposeSubject-TextField')]")
+        self.CKE_WYSIWYG_DIV = (By.XPATH, "//div[@class='composeReact-MBodyPanels']//div[starts-with(@class,'cke_wysiwyg_div ')]")
+        self.COMPOSE_SEND_BUTTON_DESKTOP = (By.XPATH, "//div[contains(@class,'ComposeSendButton_desktop')]")
+
         #self.app=app
 
         # аннотацию fixture не принимает (или class)
@@ -45,7 +55,7 @@ class SearchHelper():
     def enter_mail(self):
         # заходим на почту
         with allure.step("WebDriverWait явное ожидание"):
-            search_field = WebDriverWait(self.browser, 5).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@class,'home-link_bold_yes')]")))
+            search_field = WebDriverWait(self.browser, 5).until(EC.element_to_be_clickable(self.LOCATOR_LOGIN_IN_TO_MAIL))
         # явное ожидание ,локатор кидаем в него из другого файла
         with allure.step("клик"):
             search_field.click()
@@ -64,7 +74,7 @@ class SearchHelper():
         #логин вводим
         time.sleep(5)
         with allure.step("WebDriverWait явное ожидание"):
-            search_field = self.find_element((By.XPATH, "//input[@id='passp-field-login']"))
+            search_field = self.find_element(self.LOGIN_MAIL)
         #запуск явного ожидания через BaseApp
         with allure.step("очистили окно ввода логина"):
             search_field.clear()
@@ -79,14 +89,14 @@ class SearchHelper():
     @cli
     def click_login(self) -> str:
         #кликнули на кнопку
-        return self.find_element((By.XPATH, "//button[@type='submit']"))
+        return self.find_element(self.CLICK_LOGIN)
 
        # search_field.click()
 
     def enter_password(self,password: str):
         #пароль вводим
         with allure.step("WebDriverWait явное ожидание"):
-            search_field = self.find_element((By.XPATH, "//input[@id='passp-field-passwd']"))
+            search_field = self.find_element(self.PASSWORD_MAIL)
         with allure.step("очистили окно ввода пароля"):
             search_field.clear()
         with allure.step("ввели  пароль"):
@@ -95,7 +105,7 @@ class SearchHelper():
 
     def click_password(self):
         # кликнули на кнопку
-        search_field=self.find_element((By.XPATH, "//button[@type='submit']"))
+        search_field=self.find_element(self.CLICK_PASSWORD)
         with allure.step("Click"):
             search_field.click()
 
@@ -176,19 +186,19 @@ class SearchHelper():
         #self.app.browser.implicitly_wait(10)
         time.sleep(3)
         with allure.step("Click"):
-            self.find_element((By.XPATH, "//span[@class='mail-ComposeButton-Text']")).click()
+            self.find_element(self.POST_MAIL).click()
         with allure.step("Отправляем mail получателя"):
-            self.find_element((By.XPATH, "//div[@class='ComposeRecipients-TopRow']//div[@class='composeYabbles']")).send_keys(post_login)
+            self.find_element(self.POST_LOGIN1).send_keys(post_login)
         #здесь нужно отметьтить то ,что если сделать здесь задержку в отправке письма, то высветится окошко выбора mail, а оно перекрывает остальные окна
         #значит нужно реализовать код иначе, но так как это было замечено случайно , то лучше реализовать это потом
 
-        search_field=self.find_element((By.XPATH, "//div[@class='composeReact-MBodyPanels']//div[starts-with(@class,'cke_wysiwyg_div ')]"))
+        search_field=self.find_element(self.CKE_WYSIWYG_DIV)
         with allure.step("Click"):
             search_field.click()
         with allure.step("В теле письма пишем"):
             search_field.send_keys(f"Количество писем: {self.countmails}")
         with allure.step("Заголовок пишем"):
-            self.find_element((By.XPATH, "//div[@class='ComposeSubject']//input[starts-with(@class,'composeTextField ComposeSubject-TextField')]")).send_keys(f"Тестовое  задание.  {fam}")
+            self.find_element(self.TEXT_FIELD).send_keys(f"Тестовое  задание.  {fam}")
         with allure.step("Click"):
-            self.find_element((By.XPATH, "//div[contains(@class,'ComposeSendButton_desktop')]")).click()
+            self.find_element(self.COMPOSE_SEND_BUTTON_DESKTOP).click()
         time.sleep(5)
