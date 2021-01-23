@@ -1,7 +1,7 @@
 
 import allure
 from Dat import YandexSeacrhData as dat
-from BaseApp import BasePage
+from BaseApp import BaseApp
 from selenium.webdriver.common.by import By
 # @allure.feature('Open pages')
 # @allure.story('Открывает станицу')
@@ -26,47 +26,47 @@ class TestYand:
     def test_yandex_search(self,app):
         #аннотацию fixture не принимает (или class)
         #запускаем сайт
-        BasePage(app).go_to_site()
+        BaseApp(app).go_to_site()
         #a=BasePage(app).proverka_url("https://yandex.ru/")
         #print(a)
     @allure.story('Заходим')
     @allure.severity('blocker')
     def test_yandex_in(self,app):
         #print(BasePage(app).proverka_url("https://yandex.ru/"))
-        if BasePage(app).proverka_url("https://yandex.ru/"):
-            BasePage(app).enter_mail()
+        if BaseApp(app).proverka_url("https://yandex.ru/"):
+            BaseApp(app).enter_mail()
 
         else:
-            BasePage(app).go_to_site()
-            BasePage(app).enter_mail()
+            BaseApp(app).go_to_site()
+            BaseApp(app).enter_mail()
             #входим на почту
     @allure.story('Логин')
     @allure.severity('critical')
     def test_yandex_login(self,app):
         #print(BasePage(app).proverka_url_changes('https://passport.yandex.ru/auth/welcome?'))
 
-        if BasePage(app).proverka_url_changes('https://passport.yandex.ru/auth/welcome?') :
+        if BaseApp(app).proverka_url_changes('https://passport.yandex.ru/auth/welcome?') :
             #print(BasePage(app).proverka_url('https://passport.yandex.ru/auth/welcome?origin=home_desktop_ru&retpath=https%3A%2F%2Fmail.yandex.ru%2F&backpath=https%3A%2F%2Fyandex.ru'))
             #print(BasePage(app).browser.current_url == "https://passport.yandex.ru/auth/welcome?origin=home_desktop_ru&retpath=https%3A%2F%2Fmail.yandex.ru%2F&backpath=https%3A%2F%2Fyandex.ru")
             print('1')
-            BasePage(app).enter_login(dat.LOGIN)
-        elif BasePage(app).proverka_url("https://yandex.ru/"):
+            BaseApp(app).enter_login(dat.LOGIN)
+        elif BaseApp(app).proverka_url("https://yandex.ru/"):
             #print(BasePage(app).browser.current_url == "https://yandex.ru/")
             print('2')
-            if BasePage(app).proverka_avtorizacii() :
+            if BaseApp(app).proverka_avtorizacii() :
                 print('4')
                 #print(BasePage(app).proverka_avtorizacii())
-                BasePage(app).enter_mail()
-                BasePage(app).enter_login(dat.LOGIN)
+                BaseApp(app).enter_mail()
+                BaseApp(app).enter_login(dat.LOGIN)
 
         else:
-            BasePage(app).go_to_site()
+            BaseApp(app).go_to_site()
             print('22')
-            if BasePage(app).proverka_avtorizacii() :
+            if BaseApp(app).proverka_avtorizacii() :
                 print('4')
-                print(BasePage(app).proverka_avtorizacii())
-                BasePage(app).enter_mail()
-                BasePage(app).enter_login(dat.LOGIN)
+                print(BaseApp(app).proverka_avtorizacii())
+                BaseApp(app).enter_mail()
+                BaseApp(app).enter_login(dat.LOGIN)
                 # else:
                 #     print(BasePage(app).browser.current_url != "https://yandex.ru/")
                 #     print('3')
@@ -82,91 +82,91 @@ class TestYand:
     @allure.story('Пароль')
     @allure.severity('critical')
     def test_yandex_password(self,app):
-        if BasePage(app).proverka_url('https://passport.yandex.ru/auth/welcome?origin=home_desktop_ru&retpath=https%3A%2F%2Fmail.yandex.ru%2F&backpath=https%3A%2F%2Fyandex.ru'):
+        if BaseApp(app).proverka_url('https://passport.yandex.ru/auth/welcome?origin=home_desktop_ru&retpath=https%3A%2F%2Fmail.yandex.ru%2F&backpath=https%3A%2F%2Fyandex.ru'):
 
 
-            print(BasePage(app).browser.current_url == "https://passport.yandex.ru/auth/welcome?origin=home_desktop_ru&retpath=https%3A%2F%2Fmail.yandex.ru%2F&backpath=https%3A%2F%2Fyandex.ru")
+            print(BaseApp(app).browser.current_url == "https://passport.yandex.ru/auth/welcome?origin=home_desktop_ru&retpath=https%3A%2F%2Fmail.yandex.ru%2F&backpath=https%3A%2F%2Fyandex.ru")
             print('1')
             #BasePage(app).enter_login(dat.LOGIN)
-            BasePage(app).enter_password(dat.PASSWORD)
-        elif BasePage(app).proverka_url("https://yandex.ru/"):
+            BaseApp(app).enter_password(dat.PASSWORD)
+        elif BaseApp(app).proverka_url("https://yandex.ru/"):
             # print(BasePage(app).browser.current_url == "https://yandex.ru/")
             print('2')
-            if BasePage(app).proverka_avtorizacii():
+            if BaseApp(app).proverka_avtorizacii():
                 print('4')
                 # print(BasePage(app).proverka_avtorizacii())
-                BasePage(app).enter_mail()
-                BasePage(app).enter_login(dat.LOGIN)
-                BasePage(app).enter_password(dat.PASSWORD)
+                BaseApp(app).enter_mail()
+                BaseApp(app).enter_login(dat.LOGIN)
+                BaseApp(app).enter_password(dat.PASSWORD)
             else:
-                BasePage(app).go_to_site()
+                BaseApp(app).go_to_site()
                 print('22')
-                if BasePage(app).proverka_avtorizacii():
+                if BaseApp(app).proverka_avtorizacii():
                     print('4')
-                    print(BasePage(app).proverka_avtorizacii())
-                    BasePage(app).enter_mail()
-                    BasePage(app).enter_login(dat.LOGIN)
-                    BasePage(app).enter_password(dat.PASSWORD)
+                    print(BaseApp(app).proverka_avtorizacii())
+                    BaseApp(app).enter_mail()
+                    BaseApp(app).enter_login(dat.LOGIN)
+                    BaseApp(app).enter_password(dat.PASSWORD)
         #вводим пароль входим в аккаунт
     @allure.story('пошел по почте')
     @allure.severity('normal')
     def test_yandex_mail(self,app):
-        if BasePage(app).proverka_url("https://mail.yandex.ru/?uid=104630247#inbox"):
-            print(BasePage(app).browser.current_url == "https://mail.yandex.ru/?uid=104630247#inbox")
+        if BaseApp(app).proverka_url("https://mail.yandex.ru/?uid=104630247#inbox"):
+            print(BaseApp(app).browser.current_url == "https://mail.yandex.ru/?uid=104630247#inbox")
             print('1')
             #BasePage(app).enter_login(dat.LOGIN)
-            BasePage(app).go_mail()
-        elif BasePage(app).proverka_url("https://yandex.ru/"):
+            BaseApp(app).go_mail()
+        elif BaseApp(app).proverka_url("https://yandex.ru/"):
             # print(BasePage(app).browser.current_url == "https://yandex.ru/")
             print('2')
-            if BasePage(app).proverka_avtorizacii():
+            if BaseApp(app).proverka_avtorizacii():
                 print('4')
                 # print(BasePage(app).proverka_avtorizacii())
-                BasePage(app).enter_mail()
-                BasePage(app).enter_login(dat.LOGIN)
-                BasePage(app).enter_password(dat.PASSWORD)
-                BasePage(app).go_mail()
+                BaseApp(app).enter_mail()
+                BaseApp(app).enter_login(dat.LOGIN)
+                BaseApp(app).enter_password(dat.PASSWORD)
+                BaseApp(app).go_mail()
         else:
-            BasePage(app).go_to_site()
+            BaseApp(app).go_to_site()
             print('22')
-            if BasePage(app).proverka_avtorizacii():
+            if BaseApp(app).proverka_avtorizacii():
                 print('4')
-                print(BasePage(app).proverka_avtorizacii())
-                BasePage(app).enter_mail()
-                BasePage(app).enter_login(dat.LOGIN)
-                BasePage(app).enter_password(dat.PASSWORD)
-                BasePage(app).go_mail()
+                print(BaseApp(app).proverka_avtorizacii())
+                BaseApp(app).enter_mail()
+                BaseApp(app).enter_login(dat.LOGIN)
+                BaseApp(app).enter_password(dat.PASSWORD)
+                BaseApp(app).go_mail()
         # пошли по почте
     @allure.story('отправка почты')
     @allure.severity('critical')
     def test_yandex_output(self,app):
-        if BasePage(app).proverka_url_changes("https://mail.yandex.ru/?uid="):
+        if BaseApp(app).proverka_url_changes("https://mail.yandex.ru/?uid="):
             #print(BasePage(app).browser.current_url == "https://mail.yandex.ru/?uid=")
             print('1')
             #BasePage(app).enter_login(dat.LOGIN)
-            BasePage(app).mail_post(dat.MAIL,dat.LAST_NAME)
-        elif BasePage(app).proverka_url("https://yandex.ru/"):
+            BaseApp(app).mail_post(dat.MAIL, dat.LAST_NAME)
+        elif BaseApp(app).proverka_url("https://yandex.ru/"):
             # print(BasePage(app).browser.current_url == "https://yandex.ru/")
             print('2')
-            if BasePage(app).proverka_avtorizacii():
+            if BaseApp(app).proverka_avtorizacii():
                 print('4')
                 # print(BasePage(app).proverka_avtorizacii())
-                BasePage(app).enter_mail()
-                BasePage(app).enter_login(dat.LOGIN)
-                BasePage(app).enter_password(dat.PASSWORD)
-                BasePage(app).go_mail()
-            BasePage(app).mail_post(dat.MAIL, dat.LAST_NAME)
+                BaseApp(app).enter_mail()
+                BaseApp(app).enter_login(dat.LOGIN)
+                BaseApp(app).enter_password(dat.PASSWORD)
+                BaseApp(app).go_mail()
+            BaseApp(app).mail_post(dat.MAIL, dat.LAST_NAME)
         else:
-            BasePage(app).go_to_site()
+            BaseApp(app).go_to_site()
             print('22')
-            if BasePage(app).proverka_avtorizacii():
+            if BaseApp(app).proverka_avtorizacii():
                 print('4')
-                print(BasePage(app).proverka_avtorizacii())
-                BasePage(app).enter_mail()
-                BasePage(app).enter_login(dat.LOGIN)
-                BasePage(app).enter_password(dat.PASSWORD)
-                BasePage(app).go_mail()
-                BasePage(app).mail_post(dat.MAIL,dat.LAST_NAME)
+                print(BaseApp(app).proverka_avtorizacii())
+                BaseApp(app).enter_mail()
+                BaseApp(app).enter_login(dat.LOGIN)
+                BaseApp(app).enter_password(dat.PASSWORD)
+                BaseApp(app).go_mail()
+                BaseApp(app).mail_post(dat.MAIL, dat.LAST_NAME)
         # отправили почту
 
     

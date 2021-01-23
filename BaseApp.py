@@ -1,11 +1,11 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium import webdriver
-from YandexPages import SearchHelper
+# from selenium import webdriver
+from YandexPages import YandexPages
 import allure
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
-class BasePage(SearchHelper):
+class BaseApp(YandexPages):
 
     def __init__(self,app):
         super().__init__()

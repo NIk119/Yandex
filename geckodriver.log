@@ -17,3 +17,21 @@ getMarionetteCommandsActorProxy/get/<@chrome://marionette/content/actors/Marione
 
 ###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
 
+1611401309067	geckodriver	INFO	Listening on 127.0.0.1:49193
+1611401312125	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\User\\AppData\\Local\\Temp\\rust_mozprofilesUB6uC"
+Can't find symbol 'eglSwapBuffersWithDamageEXT'.
+Can't find symbol 'eglSetDamageRegionKHR'.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1611401321640	Marionette	INFO	Listening on port 49201
+1611401322019	Marionette	WARN	TLS certificate errors will be ignored for this session
+Can't find symbol 'eglSwapBuffersWithDamageEXT'.
+Can't find symbol 'eglSetDamageRegionKHR'.
+Can't find symbol 'eglSwapBuffersWithDamageEXT'.
+Can't find symbol 'eglSetDamageRegionKHR'.
+JavaScript warning: https://yastatic.net/partner-code-bundles/13592/5c6d7a4c4b6faa533d22.js, line 2: unreachable code after return statement
+JavaScript warning: https://yastatic.net/partner-code-bundles/13592/5c6d7a4c4b6faa533d22.js, line 2: unreachable code after return statement
+1611401348451	Marionette	INFO	Stopped listening on port 49201
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+[Parent 2648, Gecko_IOThread] WARNING: pipe error: 232: file /builds/worker/checkouts/gecko/ipc/chromium/src/chrome/common/ipc_channel_win.cc:545

@@ -31,7 +31,7 @@ def cli(fn):
 
 
 
-class SearchHelper():
+class YandexPages():
     def __init__(self):
         self.LOCATOR_LOGIN_IN_TO_MAIL=(By.XPATH, "//a[contains(@class,'home-link_bold_yes')]")
         self.LOGIN_MAIL = (By.XPATH, "//input[@id='passp-field-login']")
