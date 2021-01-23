@@ -1,11 +1,11 @@
 import pytest
-from BaseApp import BasePage
-
+#from BaseApp import BasePage
+from selenium import webdriver
 @pytest.fixture(scope="session")
 def app(request):
-    fix = BasePage()
+    fix= webdriver.Firefox()
     def close_driver():
-        fix.browser.quit()
+        fix.quit()
     request.addfinalizer(close_driver)
     return fix
 
