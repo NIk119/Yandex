@@ -42,4 +42,6 @@ class BaseApp(YandexPages):
 
         except TimeoutException:
             return False
+    def proverka_count_mail(self):
+        return self.countmails!=0
 #url_changes

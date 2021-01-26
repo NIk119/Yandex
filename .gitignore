@@ -5,3 +5,6 @@ results
 geckodriver.log
 
 geckodriver.log
+requirements.txt
+Dockerfile
+geckodriver.log

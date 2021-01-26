@@ -143,8 +143,13 @@ class TestYand:
         if BaseApp(app).proverka_url_changes("https://mail.yandex.ru/?uid="):
             #print(BasePage(app).browser.current_url == "https://mail.yandex.ru/?uid=")
             print('1')
+            if BaseApp(app).proverka_count_mail():
+                BaseApp(app).mail_post(dat.MAIL, dat.LAST_NAME)
+            else:
+                BaseApp(app).go_mail()
+                BaseApp(app).mail_post(dat.MAIL, dat.LAST_NAME)
             #BasePage(app).enter_login(dat.LOGIN)
-            BaseApp(app).mail_post(dat.MAIL, dat.LAST_NAME)
+            # BaseApp(app).mail_post(dat.MAIL, dat.LAST_NAME)
         elif BaseApp(app).proverka_url("https://yandex.ru/"):
             # print(BasePage(app).browser.current_url == "https://yandex.ru/")
             print('2')

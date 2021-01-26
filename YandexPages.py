@@ -144,7 +144,7 @@ class YandexPages():
                                 this_month=f'0{this_month}'
                             #search_field=self.app.browser.find_element_by_xpath(f"//div[@data-key='box=messages-pager-date-box']//a[@href='#inbox?datePager={this_month}.{2022-all_year-1+this_year}&']")
                             with allure.step("WebDriverWait явное ожидание"):
-                                search_field=WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, f"//div[@data-key='box=messages-pager-date-box']//a[@href='#inbox?datePager={this_month}.{2022-all_year-1+this_year}&']")))
+                                search_field=WebDriverWait(self.browser, 120).until(EC.presence_of_element_located((By.XPATH, f"//div[@data-key='box=messages-pager-date-box']//a[@href='#inbox?datePager={this_month}.{2022-all_year-1+this_year}&']")))
                             with allure.step("переместились к элементу почта , с помощью java_script"):
                                 self.browser.execute_script("coordinates = arguments[0].getBoundingClientRect();scrollTo(coordinates.x,coordinates.y);", search_field)
                             with allure.step("Click"):
@@ -159,21 +159,24 @@ class YandexPages():
 
 
                         except ElementClickInterceptedException:
-                            with allure.step(f"ElementClickInterceptedException ,отправляем снова запрос"):
+                            with allure.step(f"ElementClickInterceptedException ,выход из браузера"):
+                                print('ElementClickInterceptedException ,выход из браузера')
+                                self.browser.quit()
+
                                 #Мы ее ловим здесь и снова отправляем запрос
                                 #search_field=self.app.browser.find_element_by_xpath(f"//div[@data-key='box=messages-pager-date-box']//a[@href='#inbox?datePager={this_month}.{2022-all_year-1+this_year}&']")
-                                with allure.step("WebDriverWait явное ожидание"):
-                                    search_field=WebDriverWait(self.browser, 120).until(EC.presence_of_element_located((By.XPATH, f"//div[@data-key='box=messages-pager-date-box']//a[@href='#inbox?datePager={this_month}.{2022-all_year-1+this_year}&']")))
-                                with allure.step("переместились к элементу почта , с помощью java_script"):
-                                    self.browser.execute_script("coordinates = arguments[0].getBoundingClientRect();scrollTo(coordinates.x,coordinates.y);", search_field)
-                                with allure.step("Click"):
-                                    search_field.click()
-                                time.sleep(2)
-                                with allure.step("Берем из ссылки на сайте наше местоположение по тесту"):
-                                    v=self.browser.current_url
-                                with allure.step("прибавили к переменной класса , количество писем"):
-                                    counter_month+=self.count_mail()
-                                print(f'ошибка:ElementClickInterceptedException {v[-8:-1]} писем {counter_month}  по году{this_year} по месяцу{this_month}')
+                                # with allure.step("WebDriverWait явное ожидание"):
+                                #     search_field=WebDriverWait(self.browser, 120).until(EC.presence_of_element_located((By.XPATH, f"//div[@data-key='box=messages-pager-date-box']//a[@href='#inbox?datePager={this_month}.{2022-all_year-1+this_year}&']")))
+                                # with allure.step("переместились к элементу почта , с помощью java_script"):
+                                #     self.browser.execute_script("coordinates = arguments[0].getBoundingClientRect();scrollTo(coordinates.x,coordinates.y);", search_field)
+                                # with allure.step("Click"):
+                                #     search_field.click()
+                                # time.sleep(2)
+                                # with allure.step("Берем из ссылки на сайте наше местоположение по тесту"):
+                                #     v=self.browser.current_url
+                                # with allure.step("прибавили к переменной класса , количество писем"):
+                                #     counter_month+=self.count_mail()
+                                # print(f'ошибка:ElementClickInterceptedException {v[-8:-1]} писем {counter_month}  по году{this_year} по месяцу{this_month}')
                         with allure.step("Делаем скриншот"):
                             allure.attach(self.browser.get_screenshot_as_png(), name=f"Год {2022-all_year-1+this_year},месяц {this_month}",attachment_type=AttachmentType.PNG)
                                 #Фиксируем результаты в allure
@@ -184,6 +187,7 @@ class YandexPages():
     def mail_post(self,post_login: str,fam: str):
         #Отправляем почту ,в нее подаем 2 аргумена(почту и фамилию)
         #self.app.browser.implicitly_wait(10)
+        print(self.countmails)
         time.sleep(3)
         with allure.step("Click"):
             self.find_element(self.POST_MAIL).click()
